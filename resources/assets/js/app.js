@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7,14 +6,39 @@
 
 require('./bootstrap');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+$(document).ready(function () {
+    $(".form--server").submit(function (e) {
+        e.preventDefault();
+        var form = $(this);
+        var $forms = $(".section.section--forms");
+        var $list = $forms.find(".list--status");
+        var $btn = $forms.find('.btn--download');
 
-Vue.component('example', require('./components/Example.vue'));
+        $(".xml-results").addClass('hidden');
+        $list.html('');
+        $forms.find('.status span').html('');
 
-const app = new Vue({
-    el: '#app'
+        $btn.addClass("--loading");
+        $btn.prop("disabled", true);
+
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function (data) {
+                $forms.find('.status--error span').html(data.count.error);
+                $forms.find('.status--success span').html(data.count.success);
+                $forms.find('.status--warning span').html(data.count.updated);
+                $.each(data.errors, function (index, value) {
+                    var message = "Node (" + index + ") has missing data: " + value.join(', ');
+                    $list.append("<li>" + message + "</li>");
+                });
+            },
+            complete: function () {
+                $(".xml-results").removeClass('hidden');
+                $btn.removeClass('--loading');
+                $btn.prop("disabled", false);
+            }
+        });
+    });
 });

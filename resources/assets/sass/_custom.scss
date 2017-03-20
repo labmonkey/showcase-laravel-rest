@@ -1,0 +1,124 @@
+.wrapper {
+}
+
+.section {
+  background: $panel-bg;
+  padding: 15px 30px;
+  margin: 15px 0;
+  &.section--header {
+    h1 {
+      margin: 5px 0;
+    }
+  }
+  .section-title {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
+.btn--submit {
+  border-radius: 0;
+  border: 0;
+  margin-top: 15px;
+}
+
+.status-info {
+  margin: 30px 0;
+  .status {
+    padding: 30px;
+    text-align: center;
+    color: $body-bg;
+    font-size: 20px;
+  }
+  .status--warning {
+    background: $brand-warning;
+  }
+  .status--error {
+    background: $brand-danger;
+  }
+  .status--success {
+    background: $brand-success;
+  }
+}
+
+.list--status {
+  padding-left: 25px;
+  li {
+    padding: 5px 0;
+  }
+}
+
+.btn--download {
+  position: relative;
+  & > .glyphicon {
+    padding-right: 5px;
+    top: 3px;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    background: $brand-primary;
+    .glyphicon {
+      animation-name: rotate;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+  &.--loading {
+    .overlay {
+      transition: opacity 0.3s ease;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tab-content {
+  background: #ffffff;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
+  border-radius: 0;
+  background: #ffffff !important;
+}
+
+.nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:hover {
+  border-bottom-color: #ffffff !important;
+}
+
+.tab-content {
+  padding: 15px;
+  border-color: #dddddd;
+  border-style: solid;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-top: 0;
+  p {
+    margin: 10px 0 20px;
+  }
+}
+
+.form-group:last-of-type {
+  margin-bottom: 0;
+}
