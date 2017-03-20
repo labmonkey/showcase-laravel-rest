@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get( '/', 'SiteController@index' );
+
+Route::get( 'stores', 'StoreController@index' );
+
+Route::get( 'stores/storenumber/{id?}', 'StoreController@storenumber' );
+
+Route::post( 'stores/download', 'StoreController@download' );
+
+Route::post( 'stores/clear', 'StoreController@clear' );
