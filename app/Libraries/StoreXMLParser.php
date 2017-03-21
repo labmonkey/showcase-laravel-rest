@@ -5,23 +5,48 @@ use App\Store;
 
 class StoreXMLParser {
 
+	/*
+	 * Error messages if any.
+	 */
 	protected $errors = [];
 
-	protected $data;
+	/*
+	 * All the raw data that was parsed from given XML file.
+	 */
+	protected $data = [];
 
-	protected $models;
-
+	/*
+	 * Count of records that were updated
+	 */
 	protected $updatedCount = 0;
 
+	/*
+	 * Count of records that were inserted
+	 */
 	protected $insertedCount = 0;
 
+	/**
+	 * Parse the XML file.
+	 *
+	 * @param $filePath
+	 *
+	 * @return bool Was the operation successful
+	 */
 	public function readXml( $filePath ) {
+		if ( ! file_exists( $filePath ) ) {
+			return false;
+		}
+
 		$doc = new \DOMDocument();
 		$doc->load( $filePath );
 
 		$xpath     = new \DOMXPath( $doc );
 		$storeList = $xpath->query( "//store" );
-		$paths     = [
+
+		/*
+		 * attribute => XPath
+		 */
+		$paths = [
 			'storeNumber' => "number",
 			'storeName'   => "name",
 			'address'     => "address",
@@ -32,6 +57,9 @@ class StoreXMLParser {
 			'cfsFlag'     => "cfs_flag"
 		];
 
+		/*
+		 * This loops through all the <store> nodes and makes XPath queries on them
+		 */
 		foreach ( $storeList as $index => $store ) {
 			$data = [];
 			foreach ( $paths as $attribute => $path ) {
@@ -39,6 +67,8 @@ class StoreXMLParser {
 				$value              = implode( ', ', explode( "\n", trim( $value ) ) );
 				$data[ $attribute ] = $value;
 			}
+
+			// If some data was missing then we consider the node to be corrupt and add error
 			$validData = array_filter( $data );
 			if ( count( $data ) !== count( $validData ) ) {
 				$this->errors[ $index ] = array_keys( array_diff_key( $data, $validData ) );
@@ -46,8 +76,13 @@ class StoreXMLParser {
 				$this->data[] = $data;
 			}
 		}
+
+		return true;
 	}
 
+	/**
+	 * Converts data into Models and saves them into database
+	 */
 	public function save() {
 		foreach ( $this->data as $data ) {
 			$store  = Store::firstOrNew( [ 'storeNumber' => (int) $data['storeNumber'] ] );
@@ -55,16 +90,14 @@ class StoreXMLParser {
 
 			$store->storeNumber = (int) $data['storeNumber'];
 			$store->storeName   = $data['storeName'];
-			$store->address     = $data['storeNumber'];
-			$store->siteId      = (int) $data['storeNumber'];
-			$store->lat         = (float) $data['storeNumber'];
-			$store->lon         = (float) $data['storeNumber'];
-			$store->phoneNumber = $data['storeNumber'];
-			$store->cfsFlag     = $data['storeNumber'] === 'Y';
+			$store->address     = $data['address'];
+			$store->siteId      = (int) $data['siteId'];
+			$store->lat         = (float) $data['lat'];
+			$store->lon         = (float) $data['lon'];
+			$store->phoneNumber = $data['phoneNumber'];
+			$store->cfsFlag     = $data['cfsFlag'] === 'Y';
 
 			$store->save();
-
-			$this->models[] = $store;
 
 			if ( $exists ) {
 				$this->updatedCount ++;

@@ -9,16 +9,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StoreController extends Controller {
+
+	/**
+	 * Returns all stores.
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function index() {
-		$stores = Store::all();
-		if ( $stores->count() ) {
-			$data = [];
-			foreach ( $stores as $store ) {
-				$data[] = $store->getJsonData();
-			}
+		$stores = Store::allJsonData();
+
+		if ( count( $stores ) ) {
 			$json = [
 				'success' => true,
-				'data'    => $data
+				'data'    => $stores
 			];
 		} else {
 			$json = [
@@ -30,9 +33,18 @@ class StoreController extends Controller {
 		return response()->json( $json, 200, [], JSON_PRETTY_PRINT );
 	}
 
+	/**
+	 * Returns random store or finds one in database with given $id.
+	 * In case of error adds Message.
+	 *
+	 * @param string $id
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function storenumber( $id = null ) {
 
 		if ( ! $id ) {
+			// get random store
 			$store = Store::inRandomOrder()->first();
 			if ( $store ) {
 				$json = [
@@ -48,6 +60,7 @@ class StoreController extends Controller {
 				];
 			}
 		} else {
+			// get store by id
 			$store = Store::where( [ 'storeNumber' => $id ] )->first();
 			if ( $store ) {
 				$json = [
@@ -67,12 +80,25 @@ class StoreController extends Controller {
 		return response()->json( $json, 200, [], JSON_PRETTY_PRINT );
 	}
 
+	/**
+	 * Removes all data from the database.
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
 	public function clear() {
 		DB::table( 'stores' )->delete();
 
 		return response()->redirectTo( '/' );
 	}
 
+	/**
+	 * Populates database with data. Requires url param to be provided.
+	 * Returns errors in case of invalid data in file.
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function download( Request $request ) {
 		$url = $request->get( 'url' );
 
@@ -106,5 +132,17 @@ class StoreController extends Controller {
 		}
 
 		return response()->json( $json, 200, [], JSON_PRETTY_PRINT );
+	}
+
+	/**
+	 * Populates database with data. Requires file to be uploaded through form.
+	 * Returns errors in case of invalid data in file.
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function file( Request $request ) {
+
 	}
 }
