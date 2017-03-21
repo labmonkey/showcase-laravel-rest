@@ -1,0 +1,25 @@
+.tab-content {
+  background: #ffffff;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
+  border-radius: 0;
+  background: #ffffff !important;
+}
+
+.nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:hover {
+  border-bottom-color: #ffffff !important;
+}
+
+.tab-content {
+  padding: 15px;
+  border-color: #dddddd;
+  border-style: solid;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-top: 0;
+  p {
+    margin: 10px 0 20px;
+  }
+}

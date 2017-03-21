@@ -1,0 +1,15 @@
+.section {
+  background: $panel-bg;
+  padding: 15px 30px;
+  margin: 15px 0;
+  &.section--header {
+    h1 {
+      margin: 5px 0;
+    }
+  }
+  .section-title {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}

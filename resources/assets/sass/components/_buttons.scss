@@ -1,0 +1,40 @@
+.btn--download {
+  position: relative;
+  & > .glyphicon {
+    padding-right: 5px;
+    top: 3px;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    background: $brand-primary;
+    .glyphicon {
+      animation-name: rotate;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+  &.--loading {
+    .overlay {
+      transition: opacity 0.3s ease;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.btn--submit {
+  border-radius: 0;
+  border: 0;
+  margin-top: 15px;
+}
