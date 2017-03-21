@@ -11218,6 +11218,7 @@ module.exports = g;
 __webpack_require__(30);
 
 $(document).ready(function () {
+    // The 'Upload' button
     $(".form--server").submit(function (e) {
         e.preventDefault();
         var form = $(this);
@@ -11225,10 +11226,12 @@ $(document).ready(function () {
         var $list = $forms.find(".list--status");
         var $btn = $forms.find('.btn--download');
 
+        // hide existing results and clean them
         $(".xml-results").addClass('hidden');
         $list.html('');
         $forms.find('.status span').html('');
 
+        // disable button so users won't be able to spam requests
         $btn.addClass("--loading");
         $btn.prop("disabled", true);
 
@@ -11237,15 +11240,19 @@ $(document).ready(function () {
             url: form.attr('action'),
             data: form.serialize(),
             success: function success(data) {
+                // update counters
                 $forms.find('.status--error span').html(data.count.error);
                 $forms.find('.status--success span').html(data.count.success);
                 $forms.find('.status--warning span').html(data.count.updated);
+
+                // add errors to list
                 $.each(data.errors, function (index, value) {
                     var message = "Node (" + index + ") has missing data: " + value.join(', ');
                     $list.append("<li>" + message + "</li>");
                 });
             },
             complete: function complete() {
+                // enable button and show parsing results
                 $(".xml-results").removeClass('hidden');
                 $btn.removeClass('--loading');
                 $btn.prop("disabled", false);
