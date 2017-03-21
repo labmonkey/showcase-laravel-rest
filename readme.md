@@ -38,3 +38,14 @@ The theme is built using elixir ans scss. It's using Twitter Bootstrap library. 
 
 ### Important custom files
 
+- `app/Http/Controllers/SiteController.php` - Main Controller
+- `app/Http/Controllers/StoreController.php` - REST API controller
+- `app/Libraries/FileDownloader.php` - downloads file and unzips it
+- `app/Libraries/StoreXMLParser.php` - Parses XML files into Models
+- `app/Store.php` - Store Model used in Eloquent
+- `resources/views` - Blade templates
+- `resources/assets` - JS and CSS
+- `routes/web.php` - routes config
+- `storage/app/public/stores.xml.gz` - example file that can be uploaded
+- `database/migrations/2017_03_18_175526_create_stores_table.php` - creates database table
+- `config/custom.php` - contains custom config params
