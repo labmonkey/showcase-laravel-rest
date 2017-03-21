@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href='https://fonts.googleapis.com/css?family=Lato:100,400,300,700,900' rel='stylesheet' type='text/css'>
-
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{{ URL::asset('css/app.css') }}"/>
     <script>
+        // I had to add this fix because framework has a bug (?) and JS breaks without this.
         window.Laravel = <?php echo json_encode( [
 			'csrfToken' => csrf_token(),
 		] ); ?>

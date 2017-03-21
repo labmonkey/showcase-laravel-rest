@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('head')
-    <title>Roman numerals converter</title>
+    <title>Stores REST API</title>
 @endsection
 
 @section('content')
@@ -46,17 +46,22 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li role="presentation" class="active">
-                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                        <a href="#tab-example" role="tab" data-toggle="tab">
+                            Example
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tab-server" role="tab" data-toggle="tab">
                             Server
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                        <a href="#tab-url" role="tab" data-toggle="tab">
                             Url
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+                        <a href="#tab-upload" role="tab" data-toggle="tab">
                             File
                         </a>
                     </li>
@@ -64,12 +69,31 @@
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="home">
-                        <form action="{{ url('stores/download')}}" method="POST"
+                    <div role="tabpanel" class="tab-pane active" id="tab-example">
+                        <form action="{{ url('stores/download')}}"
+                              method="POST"
                               class="form form--server">
                             {{ csrf_field() }}
 
-                            <input type="hidden" name="url" id="task-name" class="form-control"
+                            <input type="hidden" name="url" id="task-name"
+                                   value="{{ $localFileUrl }}">
+
+                            <p>
+                                Upload the example file that is included locally.
+                            </p>
+
+                            <div class="form-group">
+                                @include ('partials._upload')
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tab-server">
+                        <form action="{{ url('stores/download')}}"
+                              method="POST"
+                              class="form form--server">
+                            {{ csrf_field() }}
+
+                            <input type="hidden" name="url" id="task-name"
                                    value="{{ $defaultServerXMLUrl }}">
 
                             <p>
@@ -81,8 +105,9 @@
                             </div>
                         </form>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="profile">
-                        <form id="form-url" action="{{ url('stores.url')}}" method="POST"
+                    <div role="tabpanel" class="tab-pane" id="tab-url">
+                        <form id="form-url" action="{{ url('stores/download') }}"
+                              method="POST"
                               class="form form--url">
                             {{ csrf_field() }}
 
@@ -91,10 +116,9 @@
                             </p>
 
                             <div class="form-group">
-                                <label for="task-name" class="control-label">Url</label>
+                                <label for="input-url" class="control-label">Url</label>
 
-                                <input type="text" name="name" id="task-name" class="form-control"
-                                       value="{{ old('task') }}">
+                                <input id="input-url" type="text" name="url" class="form-control">
                             </div>
 
                             <div class="form-group">
@@ -102,8 +126,9 @@
                             </div>
                         </form>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="messages">
-                        <form action="{{ url('stores.upload')}}" method="POST"
+                    <div role="tabpanel" class="tab-pane" id="tab-upload">
+                        <form action="{{ url('stores/file') }}"
+                              method="POST"
                               class="form form--upload">
                             {{ csrf_field() }}
 
@@ -112,10 +137,9 @@
                             </p>
 
                             <div class="form-group">
-                                <label for="task-name" class="control-label">Url</label>
+                                <label for="input-file" class="control-label">Url</label>
 
-                                <input type="file" name="name" id="task-name" class="form-control"
-                                       value="{{ old('task') }}">
+                                <input type="file" name="name" id="input-file" class="form-control">
                             </div>
 
                             <div class="form-group">
