@@ -8,7 +8,7 @@ require('./bootstrap');
 
 $(document).ready(function () {
     // The 'Upload' button
-    $(".form--server").submit(function (e) {
+    $(".form").submit(function (e) {
         e.preventDefault();
         var form = $(this);
         var $forms = $(".section.section--forms");

@@ -60,11 +60,6 @@
                             Url
                         </a>
                     </li>
-                    <li role="presentation">
-                        <a href="#tab-upload" role="tab" data-toggle="tab">
-                            File
-                        </a>
-                    </li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -119,27 +114,6 @@
                                 <label for="input-url" class="control-label">Url</label>
 
                                 <input id="input-url" type="text" name="url" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                @include ('partials._upload')
-                            </div>
-                        </form>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="tab-upload">
-                        <form action="{{ url('stores/file') }}"
-                              method="POST"
-                              class="form form--upload">
-                            {{ csrf_field() }}
-
-                            <p>
-                                Upload custom XML file with store data.
-                            </p>
-
-                            <div class="form-group">
-                                <label for="input-file" class="control-label">Url</label>
-
-                                <input type="file" name="name" id="input-file" class="form-control">
                             </div>
 
                             <div class="form-group">

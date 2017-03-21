@@ -23,13 +23,4 @@ class FileDownloader {
 
 		return $storagePath . '/' . $fileName;
 	}
-
-	/**
-	 * Downloads file uploaded via Form
-	 *
-	 * @return string File path
-	 */
-	public static function downloadFile() {
-
-	}
 }

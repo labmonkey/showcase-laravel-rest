@@ -19,6 +19,4 @@ Route::get( 'stores/storenumber/{id?}', 'StoreController@storenumber' );
 
 Route::post( 'stores/download', 'StoreController@download' );
 
-Route::post( 'stores/file', 'StoreController@file' );
-
 Route::post( 'stores/clear', 'StoreController@clear' );

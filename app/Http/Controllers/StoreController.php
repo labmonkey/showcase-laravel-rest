@@ -133,16 +133,4 @@ class StoreController extends Controller {
 
 		return response()->json( $json, 200, [], JSON_PRETTY_PRINT );
 	}
-
-	/**
-	 * Populates database with data. Requires file to be uploaded through form.
-	 * Returns errors in case of invalid data in file.
-	 *
-	 * @param Request $request
-	 *
-	 * @return \Illuminate\Http\JsonResponse
-	 */
-	public function file( Request $request ) {
-
-	}
 }
